@@ -13,7 +13,7 @@ const LIST = [
     offset: '-4',
   },
   {
-    title: 'Los Angels',
+    title: 'Los Angeles',
     zone: 'America/Los_Angeles',
     offset: '-7',
   }
