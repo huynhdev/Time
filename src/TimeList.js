@@ -28,6 +28,42 @@ function TimeList() {
     setTimeUtc(newTime.utc())
   }
 
+  const listOptions = () => {
+    return Array.from(Array(24), (_, i) => (
+      <option key={i} value={i}>{i}</option>
+    ))
+  } 
+
+  const _renderItem = (item) => (
+    <div
+      key={item.zone}
+      style={{ 
+        backgroundColor: '#113953',
+        padding: '10px 5px',
+        margin: '5px 0',
+      }}
+    >
+      <div
+        style={{
+          color: '#FFFD37',
+          fontSize: 14,
+          fontWeight: 500,
+        }}
+      >
+        {`${item.title} (${item.offset})`}
+      </div>
+      <select
+        style={{ fontSize: 14 }}
+        value={moment.tz(timeUtc, item.zone).hour()}
+        onChange={(event) => handleChange(event.target.value, item.zone)}
+      >
+        {
+          listOptions()
+        }
+      </select>
+    </div>
+  )
+
   return (
     <div style={{
       width: 300,
@@ -37,37 +73,7 @@ function TimeList() {
       padding: 10,
     }}>
       {
-        LIST.map( item => (
-          <div
-            key={item.zone}
-            style={{ 
-              backgroundColor: '#113953',
-              padding: '10px 5px',
-              margin: '5px 0',
-            }}
-          >
-            <div
-              style={{
-                color: '#FFFD37',
-                fontSize: 14,
-                fontWeight: 500,
-              }}
-            >
-              {`${item.title} (${item.offset})`}
-            </div>
-            <select
-              style={{ fontSize: 14 }}
-              value={moment.tz(timeUtc, item.zone).hour()}
-              onChange={(event) => handleChange(event.target.value, item.zone)}
-            >
-              {
-                Array.from(Array(24), (_, i) => (
-                  <option key={i} value={i}>{i}</option>
-                ))
-              }
-            </select>
-          </div>
-        ))
+        LIST.map( item => _renderItem(item))
       }
     </div>
   );
